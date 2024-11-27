@@ -26,8 +26,12 @@ app.use(express.urlencoded({ extended: true }));
 
 app.post("/feedback", async (req, res) => {
   const { name, email, message } = req.body;
-  const feedback = await new Feedback({ name, email, message }).save();
-  res.json(feedback);
+  try {
+    const feedback = await new Feedback({ name, email, message }).save();
+    res.json(feedback);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
 
 app.use((req, res) => {
