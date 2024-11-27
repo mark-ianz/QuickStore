@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import "dotenv/config";
 import Feedback from "./Feedback.js";
+import cors from "cors";
 
 const app = express();
 
@@ -23,6 +24,11 @@ startServer();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 app.post("/feedback", async (req, res) => {
   const { name, email, message, from } = req.body;
