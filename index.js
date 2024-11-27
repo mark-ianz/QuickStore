@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import "dotenv/config";
-import Feedback from "./Feedback.js"
+import Feedback from "./Feedback.js";
 
 const app = express();
 
@@ -26,6 +26,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.post("/feedback", async (req, res) => {
   const { name, email, message } = req.body;
-  const feedback = await new Feedback({name, email, message}).save();
+  const feedback = await new Feedback({ name, email, message }).save();
   res.json(feedback);
+});
+
+app.use((req, res) => {
+  res.status(404).json({ error: "Not found" });
 });
